@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 ## Data preparation
 
-This tutorial provide a sample NTL imagery (Li et al. 2020) of Guangdong province in China for debugging the program in a short time. Your customized data should be put under the `data` fordler as the sample data.
+This tutorial provide a sample NTL imagery (Li et al. 2020) of Guangdong province in China for debugging the program in a short time. Your customized data should be put under the `data` fordler as the sample data. If you intend to use `visualize_dynamics.py` to visualize the temporal dynamics of the degree of urban complexity, please ensure your NTL images are named as `2000.tif`,`2001.tif` ..., `2022.tif`.
 
 ## Generate natural cities
 
@@ -23,7 +23,19 @@ This tutorial provide a sample NTL imagery (Li et al. 2020) of Guangdong provinc
     python generate_nc.py
     ```
 
-  The program will be automatically generated the natural cities recursively which are save as geotiff format, along with the calculated degree of complexity saved as csv format.
+   The program will be automatically generated the natural cities recursively which are save as geotiff format, along with the calculated degree of complexity saved as csv format.
 
 3. Open the output files under the folder nc_tif and results_csv respectively to check whether they are successfully generated. There are I images, where I is the total number of iterations and natural cities or the sub-settlements generated at each iteration is saved with respect to `%data_name%_1.tif`, `%data_name%_2.tif`, …`%data_name%_N.tif`. The complexity results of the NTL imagery will be named as `%data_name%`.csv under the `result` folder.
 
+## Intepret temporal dynamics of complexity
+
+1. Reconduct generating the natural cities from NTL imagery for the entire 20 years following the steps in last section. You can comment out line 53 in `generate_NC.py`, to only output the statistics of calculating complexity and save memory.
+2. Open python script `visualize_dynamics.py`. Click run button on your IDE or run command:
+
+    ``` bash
+    python visualize_dynamics.py
+    ```
+
+## Results on global NTL imagery in 2022
+
+## References

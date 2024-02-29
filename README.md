@@ -18,9 +18,12 @@ This tutorial provide a sample NTL imagery (Li et al. 2020) of Guangdong provinc
 
 1. Open python script `generate_nc.py` and adjust the parameters including `data_name` on line 57 based on the sampling year of the NTL imagery used, such as 2000, 2001 etc.
 2. Click run button on your IDE or run command:
-  ``` bash
-  python generate_nc.py`
-  ```
-The program will be automatically generated the natural cities recursively which are save as geotiff format, along with the calculated degree of complexity saved as csv format.
+
+    ``` bash
+    python generate_nc.py
+    ```
+
+  The program will be automatically generated the natural cities recursively which are save as geotiff format, along with the calculated degree of complexity saved as csv format.
 
 3. Open the output files under the folder nc_tif and results_csv respectively to check whether they are successfully generated. There are I images, where I is the total number of iterations and natural cities or the sub-settlements generated at each iteration is saved with respect to `%data_name%_1.tif`, `%data_name%_2.tif`, …`%data_name%_N.tif`. The complexity results of the NTL imagery will be named as `%data_name%`.csv under the `result` folder.
+

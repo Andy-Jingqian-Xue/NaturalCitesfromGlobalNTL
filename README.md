@@ -38,4 +38,11 @@ This tutorial provide a sample NTL imagery (Li et al. 2020) of Guangdong provinc
 
 ## Results on global NTL imagery in 2022
 
+* Zoomed-in illustration of recursively generating natural cities around the world from the first iteration (a) to the last iteration (f)
+![iteration process](https://github.com/AndyXue957/NaturalCitesfromGlobalNTL/blob/70b6b4c1a466a60e301dd4832743504c89897b38/example_results/iterative%20process.png?raw=true)
+
 ## References
+
+[1] Chen Z., Yu B., Yang C., Zhou Y., Yao S., Qian X., Wang C., Wu B. and Wu J. (2021), An extended time series (2000–2018) of global NPP-VIIRS-Like nighttime light data from a cross-Sensor calibration, _Earth Syst Sci Data_, 13(3), 889-906.
+
+[2] Jiang B. and de Rijke C. (2023), Living images: A recursive approach to computing the structural beauty of images or the livingness of space, _Annals of the American Association of Geographers_, 1-19.

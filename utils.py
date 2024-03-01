@@ -193,12 +193,10 @@ def save_result(csv_path, d_array, s_array, lr_array, i):
 
     df = pd.DataFrame({
         "I": i_array,
-        "D": d_array,
-        "S": s_array,
+        "D_NC": d_array,
+        "NC": s_array,
         "H": np.round(h_array, 2),
-        "U": u_array.astype(int),
-        "%": np.round(per_array, 2),
-        "LR": lr_array
+        "CR": lr_array
     })
 
     df.to_csv(csv_path, index=False)
@@ -210,10 +208,10 @@ def save_subs(output_hie_path, output, inputraster, xy_list, projection, geotran
 
     """
 
-    base = np.zeros_like(inputraster, dtype=np.uint16)
+    base = np.zeros_like(inputraster, dtype=np.int8)
 
     for i, lr in enumerate(output):
-        himg = np.zeros_like(inputraster, dtype=np.uint16)
+        himg = np.zeros_like(inputraster, dtype=np.int16)
 
         for j, current_image in enumerate(lr):
             y, x = xy_list[i][j]
@@ -223,14 +221,14 @@ def save_subs(output_hie_path, output, inputraster, xy_list, projection, geotran
                 current_image.shape[0], y + current_image.shape[1]
             himg[x:x_end, y:y_end] = current_image
 
-        base = np.where(himg > 0, himg, base)
+        base = np.where(himg > 0, himg, base).astype(np.int8)
 
     for i in range(1, len(output)+1):
         value_output_path = join(output_hie_path, f"Iteration_{i}.tif")
 
         driver = gdal.GetDriverByName('GTiff')
         output_dataset = driver.Create(
-            value_output_path, base.shape[1], base.shape[0], 1, gdal.GDT_UInt16)
+            value_output_path, base.shape[1], base.shape[0], 1, gdal.GDT_Int16)
         output_dataset.SetGeoTransform(geotransform)
         output_dataset.SetProjection(projection)
         output_dataset.GetRasterBand(1).WriteArray(

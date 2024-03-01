@@ -16,15 +16,9 @@ def main(data_name, focus='light'):
     """
 
     # Construct paths in an OS-agnostic way
-    image_path = join("data", f"{data_name}.tif")
-    output_csv_path = join("results", f"{data_name}.csv")
-    output_hie_path = join("subs", f"{data_name}")
-
-    if not os.path.exists(os.path.dirname(output_csv_path)):
-        os.makedirs(os.path.dirname(output_csv_path))
-
-    if not os.path.exists(output_hie_path):
-        os.makedirs(output_hie_path)
+    image_path = join("Data", f"{data_name}.tif")
+    output_csv_path = join("Results_complexity", f"{data_name}.csv")
+    output_hie_path = join("Natural_cities", f"{data_name}")
 
     print("--------------------- Processing ---------------------")
 
@@ -51,6 +45,12 @@ def main(data_name, focus='light'):
     print("--------------------- Finished ---------------------")
     print(f"Final result: lr = {lr}, V = {v}")
 
+    if not os.path.exists(os.path.dirname(output_csv_path)):
+        os.makedirs(os.path.dirname(output_csv_path))
+
+    if not os.path.exists(output_hie_path):
+        os.makedirs(output_hie_path)
+
     # Save results and natural cities
     save_result(output_csv_path, d_array, s_array, lr_array, i)
     save_subs(output_hie_path, output_list, inputraster, xy_list,
@@ -59,5 +59,5 @@ def main(data_name, focus='light'):
 
 if __name__ == "__main__":
 
-    data_name = "GD_2022"
+    data_name = 'GD_2022'
     main(data_name)

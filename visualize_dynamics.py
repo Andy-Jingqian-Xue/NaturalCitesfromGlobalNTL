@@ -1,63 +1,45 @@
-import os
-import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-from os.path import join
-from osgeo import gdal
-from utils import process_recursively, save_result, save_subs
+# Assuming your CSV filenames follow a pattern like "data2000.csv", "data2001.csv", ..., "data2022.csv"
+# Adjust the path pattern according to your file naming and location
+file_names = [f"Results_complexity/{year}.csv" for year in range(2000, 2023)]
 
+# Initialize an empty list to store the sum of 'CR' column values from each file
+data_sums = []
 
-def main(data_name, focus='light'):
-    """
-    Main function to process an image hierarchically and save results.
+# Loop through the list of filenames, read each CSV file, and calculate the sum of the 'CR' column
+for file_name in file_names:
+    # Read the CSV file
+    df = pd.read_csv(file_name)
 
-    Parameters:
-    - data_name: str, the input name of your image.
-    - focus: str, "light" or "dark" to set the focus for processing.
-    """
+    # Calculate the sum of the 'CR' column and append it to the list
+    cr_sum = df['CR'].sum()  # Ensure you're using the correct column name
+    data_sums.append(cr_sum)
 
-    # Construct paths in an OS-agnostic way
-    image_path = join("data", f"{data_name}.tif")
-    output_csv_path = join("results", f"{data_name}.csv")
-    output_hie_path = join("subs", f"{data_name}")
+# Create a list of years
+years = list(range(2000, 2023))
 
-    if not os.path.exists(os.path.dirname(output_csv_path)):
-        os.makedirs(os.path.dirname(output_csv_path))
+# Plotting
+plt.figure(figsize=(7, 2.5))
+plt.plot(years, data_sums)
 
-    if not os.path.exists(output_hie_path):
-        os.makedirs(output_hie_path)
+# Set the y-axis to start from 0
+plt.ylim(bottom=0)
 
-    print("--------------------- Processing ---------------------")
+# Add title and axis labels
+plt.ylabel("Degree of Complexity (CR)", fontsize=9)
 
-    # Read and preprocess the image
-    header = gdal.Open(image_path)
-    image = header.ReadAsArray()
-    projection = header.GetProjection()
-    geotransform = header.GetGeoTransform()
-    nodata = header.GetRasterBand(1).GetNoDataValue()
-    inputraster = np.where(image == nodata, -1, image).astype(np.int64)
+# Hide the top and right axis lines
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
 
-    # Process the image recursively
-    results = process_recursively(inputraster, focus)
+# Only show the left and bottom axis lines
+plt.gca().spines['left'].set_color('black')
+plt.gca().spines['bottom'].set_color('black')
 
-    # Extract and prepare data for saving results
-    i = len(results)
-    d_array, s_array, lr_array = (
-        np.array([item[key] for item in results]) for key in ('d', 's', 'lr'))
-    output_list, xy_list = ([item[key] for item in results]
-                            for key in ('output', 'xy'))
+# Save the chart as "dynamics.jpg"
+plt.savefig("dynamics.jpg")
 
-    # Calculate and print final metrics
-    decs, v, lr = d_array.sum(), i * d_array.sum(), lr_array.sum()
-    print("--------------------- Finished ---------------------")
-    print(f"Final result: lr = {lr}, V = {v}")
-
-    # Save results and natural cities
-    save_result(output_csv_path, d_array, s_array, lr_array, i)
-    save_subs(output_hie_path, output_list, inputraster, xy_list,
-              projection, geotransform)
-
-
-if __name__ == "__main__":
-
-    data_name = "GD_2022"
-    main(data_name)
+# Uncomment to display the chart
+# plt.show()

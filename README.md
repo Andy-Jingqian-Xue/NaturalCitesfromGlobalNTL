@@ -38,8 +38,10 @@ This tutorial provide a sample NTL imagery (Li et al. 2020) of Guangdong provinc
 
 ## Results on global NTL imagery in 2022
 
-* Zoomed-in illustration of recursively generating natural cities around the world from the first iteration (a) to the last iteration (f)
-![iteration process](https://github.com/AndyXue957/NaturalCitesfromGlobalNTL/blob/main/example_results/iterative%20process.png)
+* A zoomed-in illustration of recursively generating natural cities around the world from the first iteration (a) to the last iteration (f).
+![iteration process](https://github.com/AndyXue957/NaturalCitesfromGlobalNTL/blob/main/example_results/figure1.png)
+* The evolving complexity of natural cities around the world
+![complexity](https://github.com/AndyXue957/NaturalCitesfromGlobalNTL/blob/main/example_results/dynamics.png)
 
 ## References
 
